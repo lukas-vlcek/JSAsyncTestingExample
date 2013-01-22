@@ -77,6 +77,14 @@
                 <groupId>com.github.jlgrock.javascript-framework</groupId>
                 <artifactId>closure-testing-maven-plugin</artifactId>
                 <version>${jsframework.version}</version>
+                <configuration>
+                    <prologue><![CDATA[
+                        <script type="text/javascript">
+                            goog.require('goog.testing.ContinuationTestCase');
+                            goog.require('goog.testing.jsunit');
+                        </script>
+                    ]]></prologue>
+                </configuration>
             </plugin>
 
             <plugin>
