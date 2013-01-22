@@ -1,0 +1,1 @@
+Javascript async test example.

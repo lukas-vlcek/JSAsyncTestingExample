@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>JSAsyncTestingExample</groupId>
+    <artifactId>JSAsyncTestingExample</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <properties>
+
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.plugin.version>2.0.2</maven.compiler.plugin.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <jsframework.version>1.14.0</jsframework.version>
+
+        <closure.library.version>r2180</closure.library.version>
+        <!-- Compilation level is set in profile -->
+        <!--<closure.compiler.level>WHITESPACE_ONLY</closure.compiler.level>-->
+
+    </properties>
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.jlgrock.javascript-framework</groupId>
+                <artifactId>jsar-maven-plugin</artifactId>
+                <version>${jsframework.version}</version>
+                <extensions>true</extensions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.jlgrock.javascript-framework</groupId>
+                <artifactId>jsdependency-maven-plugin</artifactId>
+                <version>${jsframework.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.jlgrock.javascript-framework</groupId>
+                <artifactId>closure-compiler-maven-plugin</artifactId>
+                <version>${jsframework.version}</version>
+                <configuration>
+                    <!--<compileLevel>ADVANCED_OPTIMIZATIONS</compileLevel>-->
+                    <!--<compileLevel>SIMPLE_OPTIMIZATIONS</compileLevel>-->
+                    <!--<compileLevel>WHITESPACE_ONLY</compileLevel>-->
+                    <compileLevel>${closure.compiler.level}</compileLevel>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.google.javascript</groupId>
+                        <artifactId>closure-compiler</artifactId>
+                        <version>${closure.library.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.jlgrock.javascript-framework</groupId>
+                <artifactId>closure-testing-maven-plugin</artifactId>
+                <version>${jsframework.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.jlgrock.javascript-framework</groupId>
+                <artifactId>jspreprocessor-maven-plugin</artifactId>
+                <version>${jsframework.version}</version>
+            </plugin>
+
+            <!-- Comment out to make build faster -->
+            <!--
+            <plugin>
+                <groupId>com.github.jlgrock.javascript-framework</groupId>
+                <artifactId>jsdocs-maven-plugin</artifactId>
+                <version>${jsframework.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jsar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.jlgrock.javascript-framework</groupId>
+                <artifactId>source-archive-maven-plugin</artifactId>
+                <version>${jsframework.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>js-gen-source-archive</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+
+        </plugins>
+
+    </build>
+
+    <profiles>
+
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <closure.compiler.level>WHITESPACE_ONLY</closure.compiler.level>
+            </properties>
+        </profile>
+
+        <!-- You should try advanced compilation before each commit into public repo. -->
+        <profile>
+            <id>advanced</id>
+            <properties>
+                <closure.compiler.level>ADVANCED_OPTIMIZATIONS</closure.compiler.level>
+            </properties>
+        </profile>
+
+    </profiles>
+
+</project>
