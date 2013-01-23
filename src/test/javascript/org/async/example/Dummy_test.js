@@ -26,19 +26,21 @@ function testDummy() {
 
     var sampleData = { sample: "data" };
 
-    dummy
-        .addCallback(function(){
-            if (console && console.log) {
-                console.log('####> Deferred got the data: ', dummy.getData());
-            }
-        });
+//    dummy
+//        .addCallback(function(){
+//            if (goog.isDefAndNotNull(console)) {
+//                console.log('####> Deferred got the data: ', dummy.getData());
+//            }
+//        });
 
-    // simulation: deferred will get data in 5 seconds
+    // deferred will get data in 10ms
     setTimeout(
         function(){
             deferred.callback(sampleData)
         }
-        , 5000);
+        , 10);
+
+    assertFalse('Deferred hasn\'t been called yet', dummy.hasFired());
 
     // wait for deferred until it get the data
     waitForCondition(
@@ -51,8 +53,8 @@ function testDummy() {
         }
     );
 
-    if (console && console.log) {
-        console.log('####> Waiting for deferred to get the data...');
-    }
+//    if (goog.isDefAndNotNull(console)) {
+//        console.log('####> Waiting for deferred to get the data...');
+//    }
 
 };
